@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product page</title>
+    <link rel="stylesheet" href="product_style.css">
+</head>
+
+<body>
+    <div class="container">
+        <!-- <div class="left-container">
+            <img src="./images/ggi-logo.png" alt="">
+        </div>
+        <div class="right-container">
+            <h2>Premium Electronics</h2>
+            <p>Experience the perfect blend of innovation and elegance with our premium electronic products. Crafted
+                with precision and designed for excellence, this product delivers exceptional performance and
+                reliability.</p>
+            <div class="product-info">
+                <span>📱 Electronics</span>
+                <span>⭐ 4.5/5 Rating</span>
+            </div>
+            <h3>₹2,999</h3>
+            <div class="button-group">
+                <div class="primary-buttons">
+                    <button>Add to Cart</button>
+                    <button>Buy Now</button>
+                </div>
+                <div class="moving-btn">
+                    <button>Previous</button>
+                    <a href="./index.html#product"> <button>Home</button></a>
+                    <button>Next</button>
+                </div>
+            </div>
+        </div> -->
+
+    </div>
+
+<script>
+// Get product source and ID from URL
+const urlParams = new URLSearchParams(window.location.search);
+const productSource = urlParams.get('source') || 'fake';
+const productId = urlParams.get('id') || 1;
+
+// Loading spinner
+document.querySelector(".container").innerHTML = `
+    <div class="loading-spinner">
+        <div class="spinner"></div>
+        <p>Product loading...</p>
+    </div>
+`;
+
+// Determine API URL based on source
+let apiUrl;
+if (productSource === 'fake') {
+    apiUrl = `https://fakestoreapi.com/products/${productId}`;
+} else {
+    apiUrl = `https://dummyjson.com/products/${productId}`;
+}
+
+// Fetch product data
+fetch(apiUrl)
+    .then((res) => {
+        if (!res.ok) {
+            throw new Error('Product not found');
+        }
+        return res.json();
+    })
+    .then((product) => {
+        console.log(product);
+        
+        let productHtml;
+        
+        if (productSource === 'fake') {
+            // FakeStore API product structure
+            productHtml = `
+                <div class="left-container">
+                    <img src="${product.image}" alt="${product.title}" loading="lazy">
+                </div>
+                <div class="right-container">
+                    <h2>${product.title}</h2>
+                    <p>${product.description}</p>
+                    <div class="product-info">
+                        <span>${product.category}</span>
+                        <span>⭐ ${product.rating.rate}/5 Rating (${product.rating.count} reviews)</span>
+                    </div>
+                    <h3>$${product.price}</h3>
+                    <div class="button-group">
+                        <div class="primary-buttons">
+                            <button onclick="addToCart(${product.id}, '${product.title}', ${product.price})">Add to Cart</button>
+                            <button onclick="buyNow(${product.id}, '${product.title}', ${product.price})">Buy Now</button>
+                        </div>
+                        <div class="moving-btn">
+                            <button onclick="previousProduct('${productSource}', ${product.id})" ${product.id <= 1 ? 'disabled' : ''}>Previous</button>
+                            <a href="./index.html#product"><button>Home</button></a>
+                            <button onclick="nextProduct('${productSource}', ${product.id})" ${product.id >= 20 ? 'disabled' : ''}>Next</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else {
+            // DummyJSON API product structure
+            productHtml = `
+                <div class="left-container">
+                    <img src="${product.images[0]}" alt="${product.title}" loading="lazy">
+                </div>
+                <div class="right-container">
+                    <h2>${product.title}</h2>
+                    <p>${product.description}</p>
+                    <div class="product-info">
+                        <span>${product.category}</span>
+                        <span>⭐ ${product.rating}/5 Rating</span>
+                    </div>
+                    <h3>$${product.price}</h3>
+                    <div class="button-group">
+                        <div class="primary-buttons">
+                            <button onclick="addToCart(${product.id}, '${product.title}', ${product.price})">Add to Cart</button>
+                            <button onclick="buyNow(${product.id}, '${product.title}', ${product.price})">Buy Now</button>
+                        </div>
+                        <div class="moving-btn">
+                            <button onclick="previousProduct('${productSource}', ${product.id})" ${product.id <= 1 ? 'disabled' : ''}>Previous</button>
+                            <a href="./index.html#product"><button>Home</button></a>
+                            <button onclick="nextProduct('${productSource}', ${product.id})">Next</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        document.querySelector(".container").innerHTML = productHtml;
+    })
+    .catch((error) => {
+        document.querySelector(".container").innerHTML = `
+            <div class="error-message">
+                <h2>Product Not Found</h2>
+                <p>Sorry, the product you're looking for doesn't exist.</p>
+                <a href="./index.html#product"><button>Back to Products</button></a>
+            </div>
+        `;
+    });
+
+// Button functions
+function addToCart(productId, title, price) {
+    alert(`"${title}" added to cart!`);
+}
+
+function buyNow(productId, title, price) {
+    const confirmed = confirm(`"${title}" ($${price}) buy now?`);
+    if (confirmed) {
+        alert('Order placed successfully! 🎉');
+    }
+}
+
+function previousProduct(source, currentId) {
+    if (currentId > 1) {
+        window.location.href = `product.html?source=${source}&id=${currentId - 1}`;
+    }
+}
+
+function nextProduct(source, currentId) {
+    const maxId = source === 'fake' ? 20 : 100; // FakeStore has 20, DummyJSON has 100
+    if (currentId < maxId) {
+        window.location.href = `product.html?source=${source}&id=${parseInt(currentId) + 1}`;
+    }
+}
+</script>
+</body>
+
+
+</html>
