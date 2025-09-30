@@ -171,13 +171,13 @@ header .mobile-search {
   border: none;
 }
 
-.categories select option {
-  font-size: 20px;
-  background: linear-gradient(to right, #022d17, #032e46);
+.categories .dropdown-icon select option {
+  background: linear-gradient(to right, #06c05f, #88bd1d);
 }
-.categories select option:hover {
+.categories .dropdown-icon select option:hover {
   background: rgb(16, 162, 72);
 }
+
 .nav-links {
   display: flex;
   gap: 2.5rem;
@@ -188,12 +188,28 @@ header .mobile-search {
   text-decoration: none;
   color: black;
   transition: all 0.3s linear;
+  position: relative;
+  display: inline-block;
+  transform-origin: center;
 }
-
-.nav-links a:focus {
-  color: #1e3a8a;
-  border-bottom: 5px solid #1e3a8a;
-  border-radius: 5px;
+.nav-links a:hover {
+  color: #488d03;
+  transform: scale(1.15);
+}
+.nav-links a::before {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 4px;
+  top: 25px;
+  bottom: 0;
+  left: 50%;
+  background:linear-gradient(to right, #022d17, #18e805);
+  transition: all 0.4s;
+}
+a:hover::before {
+  width: 100%;
+  left: 0;
 }
 
 .cart-icon i {
@@ -254,6 +270,9 @@ header .mobile-search {
   .nav-links a {
     padding: 10px 15px;
     border-bottom: 1px solid #eee;
+  }
+  .nav-links a::before{
+    top: 40px;
   }
   .cart-icon {
     order: 3;
@@ -709,7 +728,7 @@ header .mobile-search {
 /* About Section Main Container */
 .about-section {
   background: #f8fafc;
-  font-family: 'Arial', sans-serif;
+  font-family: "Arial", sans-serif;
 }
 
 /* Hero Section */
@@ -723,20 +742,19 @@ header .mobile-search {
 }
 
 .about-hero::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-
 }
 
 .about-hero h1 {
   font-size: 48px;
   font-weight: 700;
   margin-bottom: 15px;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   position: relative;
   z-index: 1;
   animation: fadeInUp 1s ease-out;
@@ -797,7 +815,7 @@ header .mobile-search {
 }
 
 .about-story h2::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -10px;
   left: 50%;
@@ -837,7 +855,7 @@ header .mobile-search {
 }
 
 .stat-item::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -889,7 +907,7 @@ header .mobile-search {
 }
 
 .about-card::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -963,7 +981,7 @@ header .mobile-search {
 }
 
 .about-values h2::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -15px;
   left: 50%;
@@ -1083,7 +1101,7 @@ header .mobile-search {
 }
 
 .about-cta::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -1169,7 +1187,8 @@ header .mobile-search {
 }
 
 @keyframes pulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(1);
   }
   50% {
@@ -1182,46 +1201,46 @@ header .mobile-search {
   .about-hero h1 {
     font-size: 36px;
   }
-  
+
   .about-hero p {
     font-size: 18px;
   }
-  
+
   .about-container {
     padding: 40px 15px;
   }
-  
+
   .about-story h2,
   .about-values h2,
   .about-team h2 {
     font-size: 28px;
   }
-  
+
   .about-stats {
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
     margin: 50px 0;
   }
-  
+
   .about-grid {
     grid-template-columns: 1fr;
     gap: 20px;
   }
-  
+
   .values-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 25px;
   }
-  
+
   .team-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .cta-buttons {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .about-btn {
     width: 200px;
   }
@@ -1231,55 +1250,54 @@ header .mobile-search {
   .about-hero {
     padding: 60px 15px;
   }
-  
+
   .about-hero h1 {
     font-size: 28px;
   }
-  
+
   .about-hero p {
     font-size: 16px;
   }
-  
+
   .about-stats {
     grid-template-columns: 1fr;
   }
-  
+
   .values-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .stat-item h3 {
     font-size: 32px;
   }
-  
+
   .about-values,
   .about-cta {
     padding: 40px 15px;
   }
-  
+
   .about-thanks {
     padding: 40px 20px;
   }
-  
+
   .thanks-logo {
     flex-direction: column;
     gap: 15px;
   }
-  
+
   .thanks-logo img {
     height: 60px;
   }
-  
+
   .thanks-icon {
     width: 60px;
     height: 60px;
   }
-  
+
   .thanks-icon i {
     font-size: 24px;
   }
 }
-
 
 /*================ Contact section styling ========================*/
 #contact-page {
