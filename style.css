@@ -204,7 +204,7 @@ header .mobile-search {
   top: 25px;
   bottom: 0;
   left: 50%;
-  background:linear-gradient(to right, #022d17, #18e805);
+  background: linear-gradient(to right, #022d17, #18e805);
   transition: all 0.4s;
 }
 a:hover::before {
@@ -271,7 +271,7 @@ a:hover::before {
     padding: 10px 15px;
     border-bottom: 1px solid #eee;
   }
-  .nav-links a::before{
+  .nav-links a::before {
     top: 40px;
   }
   .cart-icon {
@@ -560,7 +560,9 @@ a:hover::before {
 .product-card:hover img {
   transform: scale(1.05);
 }
-
+.product-card img:hover {
+  transform: scale(1.12);
+}
 .product-card .product-info {
   display: flex;
   justify-content: space-between;
@@ -593,16 +595,34 @@ a:hover::before {
   font-weight: 600;
 }
 
+.product-card .price-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 15px 0;
+  gap: 2px;
+}
+
 .product-card .price {
   font-size: 22px;
   color: #146901;
   font-weight: bold;
-  margin: 15px 0;
+  margin: 0;
 }
+
+.product-card .original-price {
+  text-decoration: line-through;
+  color: #999;
+  font-size: 15px;
+  text-align: left;
+  margin: 0;
+}
+
 .product-card .content {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
+  margin-top: 15px;
 }
 .product-card .add-to-cart {
   background: linear-gradient(135deg, #022d17, #032e46);
@@ -631,6 +651,7 @@ a:hover::before {
   border: 1px solid #bc2a8d;
   padding: 5px;
   position: relative;
+  margin-top: -55px;
   width: 5em;
   height: 1.7em;
   transition: 0.5s;

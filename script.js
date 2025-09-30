@@ -80,55 +80,72 @@ Promise.all([
   fetch("https://fakestoreapi.com/products").then((res) => res.json()),
   fetch("https://dummyjson.com/products").then((res) => res.json()),
 ]).then(([fakeData, dummyData]) => {
-    // console.log(fakeData);
-    // console.log(dummyData);
+  // console.log(fakeData);
+  // console.log(dummyData);
   let fullData = "";
 
   // 🔹 FakeStore Products
   fakeData.forEach((element) => {
+    const currentPrice = (element.price * 88.86).toFixed(2);
+    const originalPrice = (element.price * 88.86 * 1.5).toFixed(2);
+    
     fullData += `
        <div class="product-card">
-                <img src="${element.image}"
-                    alt="${element.title}">
+                <img src="${element.image}" alt="${element.title}">
                 <div class="product-info">
                     <span>${element.category}</span>
                     <span>☆ ${element.rating.rate}</span>
                 </div>
                 <hr>
                 <h3>${element.title}</h3>
-                <div class="content">
-                    <p class="price">$${element.price}</p>
-                    <button onclick="viewProduct('fake', ${element.id})"><p>→ Details</p></button>
+                <div class="price-section">
+                    <p class="price">₹${currentPrice}</p>
+                    <span class="original-price">₹${originalPrice}</span>
                 </div>
-                <button class="add-to-cart"><i class="fa-solid fa-cart-plus"></i> Add to Cart</button>
+                <div class="content">
+                    <button onclick="viewProduct('fake', ${element.id})">
+                        <p>→ Details</p>
+                    </button>
+                </div>
+                <button class="add-to-cart">
+                    <i class="fa-solid fa-cart-plus"></i> Add to Cart
+                </button>
             </div>
         `;
   });
 
   // 🔹 DummyJSON Products
   dummyData.products.forEach((element) => {
+    const currentPrice = element.price;
+    const originalPrice = (element.price * 1.3).toFixed(2);
+    
     fullData += `
          <div class="product-card">
-                <img src="${element.images[0]}"
-                    alt="${element.title}">
+                <img src="${element.images[0]}" alt="${element.title}">
                 <div class="product-info">
                     <span>${element.category}</span>
                     <span>☆ ${element.rating}</span>
                 </div>
                 <hr>
                 <h3>${element.title}</h3>
-                <div class="content">
-                    <p class="price">$${element.price}</p>
-                    <button onclick="viewProduct('dummy', ${element.id})"><p>→ Details</p></button>
+                <div class="price-section">
+                    <p class="price">$${currentPrice}</p>
+                    <span class="original-price">$${originalPrice}</span>
                 </div>
-                <button class="add-to-cart"><i class="fa-solid fa-cart-plus"></i> Add to Cart</button>
+                <div class="content">
+                    <button onclick="viewProduct('dummy', ${element.id})">
+                        <p>→ Details</p>
+                    </button>
+                </div>
+                <button class="add-to-cart">
+                    <i class="fa-solid fa-cart-plus"></i> Add to Cart
+                </button>
             </div>
         `;
   });
   // Display all products in the product-grid
   document.querySelector(".product-grid").innerHTML = fullData;
 });
-
 
 // Function to navigate to product details page
 function viewProduct(source, productId) {

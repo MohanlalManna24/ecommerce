@@ -118,12 +118,18 @@ body {
     font-size: 2.5rem;
     font-weight: 700;
     color: #118f05;
-    margin: 24px 0;
+    margin: 0px 0;
     display: flex;
     align-items: baseline;
     gap: 8px;
 }
-
+.right-container .original-price {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #9ca3af;
+    text-decoration: line-through;
+    margin-top: -20px;
+}
 .button-group {
     display: flex;
     flex-direction: column;
