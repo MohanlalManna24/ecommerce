@@ -86,9 +86,9 @@ Promise.all([
 
   // 🔹 FakeStore Products
   fakeData.forEach((element) => {
-    const currentPrice = (element.price * 88.86).toFixed(2);
-    const originalPrice = (element.price * 88.86 * 1.5).toFixed(2);
-    
+    const currentPrice = Math.ceil(element.price * 88.86);
+    const originalPrice = Math.ceil(element.price * 88.86 * 1.5);
+
     fullData += `
        <div class="product-card">
                 <img src="${element.image}" alt="${element.title}">
@@ -116,8 +116,8 @@ Promise.all([
 
   // 🔹 DummyJSON Products
   dummyData.products.forEach((element) => {
-    const currentPrice = element.price;
-    const originalPrice = (element.price * 1.3).toFixed(2);
+    const currentPrice = Math.ceil(element.price * 88.86);
+    const originalPrice = Math.ceil(element.price * 1.3) * 88.86;
     
     fullData += `
          <div class="product-card">
@@ -129,8 +129,8 @@ Promise.all([
                 <hr>
                 <h3>${element.title}</h3>
                 <div class="price-section">
-                    <p class="price">$${currentPrice}</p>
-                    <span class="original-price">$${originalPrice}</span>
+                    <p class="price">₹${currentPrice}</p>
+                    <span class="original-price">₹${originalPrice}</span>
                 </div>
                 <div class="content">
                     <button onclick="viewProduct('dummy', ${element.id})">
