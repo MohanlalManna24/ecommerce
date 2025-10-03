@@ -76,6 +76,14 @@ prevBtn.addEventListener("click", () => {
 resetAutoPlay();
 
 /*================ products ==================*/
+
+       document.querySelector(".product-grid").innerHTML = `
+    <div class="loading-spinner">
+        <div class="spinner"></div>
+        <p>Product loading...</p>
+    </div>
+`;
+
 Promise.all([
   fetch("https://fakestoreapi.com/products").then((res) => res.json()),
   fetch("https://dummyjson.com/products").then((res) => res.json()),
