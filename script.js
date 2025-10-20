@@ -83,80 +83,46 @@ resetAutoPlay();
         <p>Product loading...</p>
     </div>
 `;
+const api = "https://68f27698b36f9750deecb93f.mockapi.io/gift";
+fetch(api)
+  .then((response) => response.json())
+  .then((data) => {
+    // Clear loading spinner
+    document.querySelector(".product-grid").innerHTML = "";
 
-Promise.all([
-  fetch("https://fakestoreapi.com/products").then((res) => res.json()),
-  fetch("https://dummyjson.com/products").then((res) => res.json()),
-]).then(([fakeData, dummyData]) => {
-  // console.log(fakeData);
-  // console.log(dummyData);
-  let fullData = "";
+    data.forEach((product) => {
+      const currentPrice = Math.ceil(product.price - (product.price * product.percentage) / 100);
+      const originalPrice = Math.ceil(product.price);
 
-  // 🔹 FakeStore Products
-  fakeData.forEach((element) => {
-    const currentPrice = Math.ceil(element.price * 88.86);
-    const originalPrice = Math.ceil(element.price * 88.86 * 1.5);
-
-    fullData += `
-       <div class="product-card">
-                <img src="${element.image}" alt="${element.title}">
-                <div class="product-info">
-                    <span>${element.category}</span>
-                    <span>☆ ${element.rating.rate}</span>
-                </div>
-                <hr>
-                <h3>${element.title}</h3>
-                <div class="price-section">
-                    <p class="price">₹${currentPrice}</p>
-                    <span class="original-price">₹${originalPrice}</span>
-                </div>
-                <div class="content">
-                    <button onclick="viewProduct('fake', ${element.id})">
-                        <p>→ Details</p>
-                    </button>
-                </div>
-                <button class="add-to-cart">
-                    <i class="fa-solid fa-cart-plus"></i> Add to Cart
-                </button>
+      document.querySelector(".product-grid").innerHTML += `
+        <div class="product-card">
+          <img src="${product.image}" alt="${product.title}">
+          <div class="product-info">
+            <span>${product.category}</span>
+            <span>☆ ${product.rating}</span>
+          </div>
+          <hr>
+          <h3>${product.title}</h3>
+          <div class="price-section">
+            <p class="price">₹${currentPrice}</p>
+            <div class="original-price-container">
+              <span class="original-price">₹${originalPrice}</span> <span class="discount">(${product.percentage}% OFF)</span>
             </div>
-        `;
+          </div>
+          <div class="content">
+            <button onclick="viewProduct(${product.id})">
+              <p>→ Details</p>
+            </button>
+          </div>
+          <button class="add-to-cart">
+            <i class="fa-solid fa-cart-plus"></i> Add to Cart
+          </button>
+        </div>
+      `;
+    });
   });
-
-  // 🔹 DummyJSON Products
-  dummyData.products.forEach((element) => {
-    const currentPrice = Math.ceil(element.price * 88.86);
-    const originalPrice = Math.ceil(element.price * 1.3) * 88.86;
-    
-    fullData += `
-         <div class="product-card">
-                <img src="${element.images[0]}" alt="${element.title}">
-                <div class="product-info">
-                    <span>${element.category}</span>
-                    <span>☆ ${element.rating}</span>
-                </div>
-                <hr>
-                <h3>${element.title}</h3>
-                <div class="price-section">
-                    <p class="price">₹${currentPrice}</p>
-                    <span class="original-price">₹${originalPrice}</span>
-                </div>
-                <div class="content">
-                    <button onclick="viewProduct('dummy', ${element.id})">
-                        <p>→ Details</p>
-                    </button>
-                </div>
-                <button class="add-to-cart">
-                    <i class="fa-solid fa-cart-plus"></i> Add to Cart
-                </button>
-            </div>
-        `;
-  });
-  // Display all products in the product-grid
-  document.querySelector(".product-grid").innerHTML = fullData;
-});
 
 // Function to navigate to product details page
-function viewProduct(source, productId) {
-  // Redirect to product.html with URL parameters
-  window.location.href = `product.html?source=${source}&id=${productId}`;
+function viewProduct(productId) {
+  window.location.href = `product.html?&id=${productId}`;
 }

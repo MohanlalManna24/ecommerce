@@ -636,7 +636,7 @@ a:hover::before {
 }
 
 .product-card .price {
-  font-size: 22px;
+  font-size: 25px;
   color: #146901;
   font-weight: bold;
   margin: 0;
@@ -645,11 +645,16 @@ a:hover::before {
 .product-card .original-price {
   text-decoration: line-through;
   color: #999;
-  font-size: 15px;
+  font-size: 18px;
   text-align: left;
-  margin: 0;
+  margin-top: 10px;
 }
-
+.product-card .discount {
+  color: #c62828;
+  font-size: 15px;
+  font-weight: 600;
+  margin-left: 5px;
+}
 .product-card .content {
   display: flex;
   align-items: center;
