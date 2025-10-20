@@ -76,51 +76,78 @@ prevBtn.addEventListener("click", () => {
 resetAutoPlay();
 
 /*================ products ==================*/
-
-       document.querySelector(".product-grid").innerHTML = `
+document.querySelector(".product-grid").innerHTML = `
     <div class="loading-spinner">
         <div class="spinner"></div>
         <p>Product loading...</p>
     </div>
 `;
+
+let allProducts = []; // Store all products
+let currentDisplayCount = 8; // Initially show 8 products
+
 const api = "https://68f27698b36f9750deecb93f.mockapi.io/gift";
 fetch(api)
   .then((response) => response.json())
   .then((data) => {
-    // Clear loading spinner
-    document.querySelector(".product-grid").innerHTML = "";
+    allProducts = data; // Store all products
+    loadProducts();
+  });
 
-    data.forEach((product) => {
-      const currentPrice = Math.ceil(product.price - (product.price * product.percentage) / 100);
-      const originalPrice = Math.ceil(product.price);
+// Function to load and display products
+function loadProducts() {
+  const productsToShow = allProducts.slice(0, currentDisplayCount);
+  
+  // Clear and rebuild product grid
+  document.querySelector(".product-grid").innerHTML = "";
 
-      document.querySelector(".product-grid").innerHTML += `
-        <div class="product-card">
-          <img src="${product.image}" alt="${product.title}">
-          <div class="product-info">
-            <span>${product.category}</span>
-            <span>☆ ${product.rating}</span>
+  productsToShow.forEach((product) => {
+    const currentPrice = Math.ceil(
+      product.price - (product.price * product.percentage) / 100
+    );
+    const originalPrice = Math.ceil(product.price);
+
+    document.querySelector(".product-grid").innerHTML += `
+      <div class="product-card">
+        <img src="${product.image}" alt="${product.title}">
+        <div class="product-info">
+          <span>${product.category}</span>
+          <span>☆ ${product.rating}</span>
+        </div>
+        <hr>
+        <h3>${product.title}</h3>
+        <div class="price-section">
+          <p class="price">₹${currentPrice}</p>
+          <div class="original-price-container">
+            <span class="original-price">₹${originalPrice}</span> <span class="discount">(${product.percentage}% OFF)</span>
           </div>
-          <hr>
-          <h3>${product.title}</h3>
-          <div class="price-section">
-            <p class="price">₹${currentPrice}</p>
-            <div class="original-price-container">
-              <span class="original-price">₹${originalPrice}</span> <span class="discount">(${product.percentage}% OFF)</span>
-            </div>
-          </div>
-          <div class="content">
-            <button onclick="viewProduct(${product.id})">
-              <p>→ Details</p>
-            </button>
-          </div>
-          <button class="add-to-cart">
-            <i class="fa-solid fa-cart-plus"></i> Add to Cart
+        </div>
+        <div class="content">
+          <button onclick="viewProduct(${product.id})">
+            <p>→ Details</p>
           </button>
         </div>
-      `;
-    });
+        <button class="add-to-cart">
+          <i class="fa-solid fa-cart-plus"></i> Add to Cart
+        </button>
+      </div>
+    `;
   });
+
+  // Show or hide "See More" button
+  const seeMoreBtn = document.querySelector("#see-more-btn");
+  if (currentDisplayCount >= allProducts.length) {
+    seeMoreBtn.style.display = "none"; // Hide button when all products are shown
+  } else {
+    seeMoreBtn.style.display = "block"; // Show button
+  }
+}
+
+// "See More" button click event
+document.querySelector("#see-more-btn").addEventListener("click", () => {
+  currentDisplayCount += 8; // Add 4 more products
+  loadProducts();
+});
 
 // Function to navigate to product details page
 function viewProduct(productId) {
