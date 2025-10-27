@@ -83,14 +83,14 @@ document.querySelector(".product-grid").innerHTML = `
     </div>
 `;
 
-let allProducts = []; // Store all products
-let currentDisplayCount = 8; // Initially show 8 products
+let allProducts = [];
+let currentDisplayCount = 8;
 
 const api = "https://68f27698b36f9750deecb93f.mockapi.io/gift";
 fetch(api)
   .then((response) => response.json())
   .then((data) => {
-    allProducts = data; // Store all products
+    allProducts = data;
     displayProduct(allProducts);
   });
 
@@ -134,6 +134,13 @@ function displayProduct(products) {
     `;
   });
 
+  document.querySelector('#top-deals').addEventListener('click', () => {
+    const sortedProducts = [...allProducts].sort((a, b) => b.rating - a.rating);
+    displayProduct(sortedProducts);
+  });
+document.querySelector('#shop').addEventListener('click', () => {
+    displayProduct(allProducts);
+  });
   // Show or hide "See More" button
   const seeMoreBtn = document.querySelector("#see-more-btn");
   if (currentDisplayCount >= allProducts.length) {
