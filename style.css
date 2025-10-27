@@ -83,7 +83,11 @@ header .mobile-search {
   margin-right: 50px;
   margin-top: 10px;
 }
-.login span:hover {
+.login span a{
+  text-decoration: none;
+  color: white;
+}
+.login span a:hover {
   color: #fdd935;
   cursor: pointer;
 }

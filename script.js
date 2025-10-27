@@ -91,13 +91,13 @@ fetch(api)
   .then((response) => response.json())
   .then((data) => {
     allProducts = data; // Store all products
-    loadProducts();
+    displayProduct(allProducts);
   });
 
 // Function to load and display products
-function loadProducts() {
-  const productsToShow = allProducts.slice(0, currentDisplayCount);
-  
+function displayProduct(products) {
+  const productsToShow = products.slice(0, currentDisplayCount);
+
   // Clear and rebuild product grid
   document.querySelector(".product-grid").innerHTML = "";
 
@@ -146,7 +146,7 @@ function loadProducts() {
 // "See More" button click event
 document.querySelector("#see-more-btn").addEventListener("click", () => {
   currentDisplayCount += 8; // Add 4 more products
-  loadProducts();
+  displayProduct(allProducts);
 });
 
 // Function to navigate to product details page
